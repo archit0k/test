@@ -23,7 +23,39 @@ const _layout = () => {
     { code: "EUR", name: "Euro" },
     { code: "GBP", name: "British Pound" },
     { code: "AUD", name: "Australian Dollar" },
+    { code: "CAD", name: "Canadian Dollar" },
+    { code: "JPY", name: "Japanese Yen" },
+    { code: "CNY", name: "Chinese Yuan" },
+    { code: "CHF", name: "Swiss Franc" },
+    { code: "NZD", name: "New Zealand Dollar" },
+    { code: "SGD", name: "Singapore Dollar" },
+    { code: "HKD", name: "Hong Kong Dollar" },
+    { code: "SEK", name: "Swedish Krona" },
+    { code: "NOK", name: "Norwegian Krone" },
+    { code: "DKK", name: "Danish Krone" },
+    { code: "RUB", name: "Russian Ruble" },
+    { code: "ZAR", name: "South African Rand" },
+    { code: "BRL", name: "Brazilian Real" },
+    { code: "MXN", name: "Mexican Peso" },
+    { code: "KRW", name: "South Korean Won" },
+    { code: "THB", name: "Thai Baht" },
+    { code: "MYR", name: "Malaysian Ringgit" },
+    { code: "IDR", name: "Indonesian Rupiah" },
+    { code: "PHP", name: "Philippine Peso" },
+    { code: "VND", name: "Vietnamese Dong" },
+    { code: "PLN", name: "Polish Zloty" },
+    { code: "TRY", name: "Turkish Lira" },
+    { code: "SAR", name: "Saudi Riyal" },
+    { code: "AED", name: "United Arab Emirates Dirham" },
+    { code: "EGP", name: "Egyptian Pound" },
+    { code: "NGN", name: "Nigerian Naira" },
+    { code: "KES", name: "Kenyan Shilling" },
+    { code: "PKR", name: "Pakistani Rupee" },
+    { code: "BDT", name: "Bangladeshi Taka" },
   ];
+
+  
+  
 
   const [baseAmount, setBaseAmount] = useState("");
   const [targetAmount, setTargetAmount] = useState("");
@@ -57,6 +89,18 @@ const _layout = () => {
   useEffect(() => {
     fetchExchangeRate();
   }, [baseCurrency, targetCurrency]);
+
+  useEffect(() => {
+    const recalculateTargetAmount = () => {
+      if (baseAmount && !isNaN(baseAmount) && exchangeRate) {
+        setTargetAmount((parseFloat(baseAmount) * exchangeRate).toFixed(2));
+      } else {
+        setTargetAmount(""); // Clear target amount if base amount is invalid
+      }
+    };
+  
+    recalculateTargetAmount();
+  }, [exchangeRate, baseAmount]);
 
 
   const handleSwap = () => {
@@ -105,6 +149,7 @@ const _layout = () => {
             <ModalDropdown
               options={currencies.map((curr) => curr.name)}
               defaultValue={baseCurrency}
+              
               onSelect={(index, value) => {
                 const selectedCurrency = currencies.find((curr) => curr.name === value);
                 if (selectedCurrency) setBaseCurrency(selectedCurrency.code);
@@ -131,6 +176,7 @@ const _layout = () => {
                 return selectedCurrency ? selectedCurrency.code : baseCurrency;
               }}
             />
+
           </View>
 
           {/* Swap Button */}
