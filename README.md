@@ -10,7 +10,17 @@ A simple and user-friendly **Currency Converter** application built with React N
 - **Dynamic Updates**: Instant calculations based on user input.
 
 ## Screenshots
-*(Add screenshots of your app here)*
+  ### Home Screen Dark
+  ![Home Screen Dark](app/assets/home_screen_dark.jpg)
+
+  ### Home Screen Light
+  ![Home Screen Light](app/assets/home_screen_light.jpg)
+
+  ### Dropdown Example
+  ![Dropdown Example](app/assets/dropdown_example.jpg)
+
+  ### Conversion Example
+  ![Conversion Example](app/assets/conversion_example.jpg)
 
 ## Tech Stack
 - **React Native**: For building cross-platform mobile applications.
