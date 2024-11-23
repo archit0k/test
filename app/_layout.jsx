@@ -9,15 +9,12 @@ import "../global.css";
 
 const _layout = () => {
 
-  const systemTheme = useColorScheme();
-  const [theme, setTheme] = useState(systemTheme);
-
-  useEffect(() => {
-    setTheme(systemTheme);
-  }, [systemTheme]);
+  const Theme = useColorScheme();
+  const [systemTheme, setSystemTheme] = useState(Theme);
+  
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
+    setSystemTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
   };
 
   const currencies = [
@@ -106,8 +103,8 @@ const _layout = () => {
             />
 
             <ModalDropdown
-              options={currencies.map((curr) => curr.name)} // Full names in dropdown
-              defaultValue={baseCurrency} // Short code (like "USD") on button
+              options={currencies.map((curr) => curr.name)}
+              defaultValue={baseCurrency}
               onSelect={(index, value) => {
                 const selectedCurrency = currencies.find((curr) => curr.name === value);
                 if (selectedCurrency) setBaseCurrency(selectedCurrency.code);
@@ -123,11 +120,15 @@ const _layout = () => {
               }}
               dropdownStyle={{
                 borderRadius: 8,
-                backgroundColor: systemTheme === "dark" ? "#000" : "#fff", // Adjust according to theme
+                backgroundColor: systemTheme === "dark" ? "#000" : "#fff",
               }}
               dropdownTextStyle={{
                 color: systemTheme === "dark" ? "#000" : "#000",
                 fontSize: 16,
+              }}
+              renderButtonText={(rowData) => {
+                const selectedCurrency = currencies.find((curr) => curr.name === rowData);
+                return selectedCurrency ? selectedCurrency.code : baseCurrency;
               }}
             />
           </View>
@@ -155,9 +156,36 @@ const _layout = () => {
               editable={false}
             />
 
-            <TouchableOpacity className="p-3 bg-blue-500 rounded-lg">
-              <Text className="text-white font-bold">{targetCurrency}</Text>
-            </TouchableOpacity>
+            <ModalDropdown
+              options={currencies.map((curr) => curr.name)}
+              defaultValue={targetCurrency}
+              onSelect={(index, value) => {
+                const selectedCurrency = currencies.find((curr) => curr.name === value);
+                if (selectedCurrency) setTargetCurrency(selectedCurrency.code);
+              }}
+              style={{
+                padding: 10,
+                backgroundColor: systemTheme === "dark" ? "#3B82F6" : "#3B82F6",
+                borderRadius: 8,
+              }}
+              textStyle={{
+                color: "white",
+                fontWeight: "bold",
+              }}
+              dropdownStyle={{
+                borderRadius: 8,
+                backgroundColor: systemTheme === "dark" ? "#000" : "#fff",
+              }}
+              dropdownTextStyle={{
+                color: systemTheme === "dark" ? "#000" : "#000",
+                fontSize: 16,
+              }}
+              renderButtonText={(rowData) => {
+                const selectedCurrency = currencies.find((curr) => curr.name === rowData);
+                return selectedCurrency ? selectedCurrency.code : targetCurrency;
+              }}
+            />
+
           </View>
 
           {isLoading && <Text className="text-gray-500">Fetching rates...</Text>}
@@ -166,17 +194,17 @@ const _layout = () => {
         </View>
         <TouchableOpacity
           onPress={toggleTheme} // This toggles the theme
-          className={`p-3 rounded-lg ${theme === "dark" ? "bg-gray-700" : "bg-gray-200"} items-center`} // Merged className
+          className={`p-3 rounded-lg ${systemTheme === "dark" ? "bg-gray-700" : "bg-gray-200"} items-center`} 
 >
           <Ionicons
-            name={theme === "dark" ? "sunny" : "moon"} // Toggle icon based on the theme
+            name={systemTheme === "dark" ? "sunny" : "moon"} 
             size={24}
-            color={theme === "dark" ? "yellow" : "black"} // Change icon color based on theme
+            color={systemTheme === "dark" ? "yellow" : "black"} 
           />
           <Text
-            className={`text-xl ${theme === "dark" ? "text-white" : "text-black"}`}
+            className={`text-xl ${systemTheme === "dark" ? "text-white" : "text-black"}`}
           >
-            {theme === "dark" ? "Switch to Light" : "Switch to Dark"}
+            {systemTheme === "dark" ? "Switch to Light" : "Switch to Dark"}
           </Text>
         </TouchableOpacity>
 
