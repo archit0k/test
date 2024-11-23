@@ -35,7 +35,7 @@ A simple and user-friendly **Currency Converter** application built with React N
     ```  
 3. Install dependencies:
     ```bash
-    npm install  <(dependencies)>
+    npm install
     ```
 4. Start the development server:
     ```bash
@@ -45,11 +45,11 @@ A simple and user-friendly **Currency Converter** application built with React N
 
 ## Dependencies
 
-  react-native-safe-area-context
-  nativewind
-  expo-status-bar
-  react-native-modal-dropdown
-  @expo/vector-icons
+  - react-native-safe-area-context
+  - nativewind
+  - expo-status-bar
+  - react-native-modal-dropdown
+  - @expo/vector-icons
 
 ## API Integration
   This app integrates the ExchangeRate-API to fetch the latest currency exchange rates. For more details on this API, visit ExchangeRate-API.
