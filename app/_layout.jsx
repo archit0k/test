@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image, TouchableOpacity, useWindowDimensions, Dimensions, useColorScheme, TextInput } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { useState, useEffect } from 'react';
-import RNPickerSelect from 'react-native-picker-select';
 import "../global.css";
 
 const _layout = () => {
@@ -149,7 +148,7 @@ const _layout = () => {
             <ModalDropdown
               options={currencies.map((curr) => curr.name)}
               defaultValue={baseCurrency}
-              
+
               onSelect={(index, value) => {
                 const selectedCurrency = currencies.find((curr) => curr.name === value);
                 if (selectedCurrency) setBaseCurrency(selectedCurrency.code);
