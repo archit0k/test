@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image, TouchableOpacity, useWindowDimensions, Dimensions, useColorScheme, TextInput } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import "../global.css";
 
 const _layout = () => {
@@ -53,7 +54,37 @@ const _layout = () => {
     { code: "BDT", name: "Bangladeshi Taka" },
   ];
 
-  
+  useEffect(() => {
+    const fetchPersistedData = async () => {
+      try {
+        const savedBaseCurrency = await AsyncStorage.getItem('baseCurrency');
+        const savedTargetCurrency = await AsyncStorage.getItem('targetCurrency');
+        const savedBaseAmount = await AsyncStorage.getItem('baseAmount');
+
+        if (savedBaseCurrency) setBaseCurrency(savedBaseCurrency);
+        if (savedTargetCurrency) setTargetCurrency(savedTargetCurrency);
+        if (savedBaseAmount) setBaseAmount(savedBaseAmount);
+      } catch (error) {
+        console.error('Error fetching persisted data:', error);
+      }
+    };
+
+    fetchPersistedData();
+  }, []);
+
+  useEffect(() => {
+    const savePersistedData = async () => {
+      try {
+        await AsyncStorage.setItem('baseCurrency', baseCurrency);
+        await AsyncStorage.setItem('targetCurrency', targetCurrency);
+        await AsyncStorage.setItem('baseAmount', baseAmount);
+      } catch (error) {
+        console.error('Error saving persisted data:', error);
+      }
+    };
+
+    savePersistedData();
+  }, [baseCurrency, targetCurrency, baseAmount]);
   
 
   const [baseAmount, setBaseAmount] = useState("");
