@@ -94,7 +94,7 @@ const _layout = () => {
       if (baseAmount && !isNaN(baseAmount) && exchangeRate) {
         setTargetAmount((parseFloat(baseAmount) * exchangeRate).toFixed(2));
       } else {
-        setTargetAmount(""); // Clear target amount if base amount is invalid
+        setTargetAmount("");
       }
     };
   
@@ -240,7 +240,7 @@ const _layout = () => {
         <TouchableOpacity
           onPress={toggleTheme} // This toggles the theme
           className={`p-3 rounded-lg ${systemTheme === "dark" ? "bg-gray-700" : "bg-gray-200"} items-center`} 
->
+          >
           <Ionicons
             name={systemTheme === "dark" ? "sunny" : "moon"} 
             size={24}
